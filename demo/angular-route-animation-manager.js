@@ -33,8 +33,13 @@ app.provider('RouteAnimationManager', function()  {
     this.setAnimationClass =  function(currentRoute, nextRoute) {
       if (!nextRoute || !nextRoute.originalPath || !nextRoute.data || !nextRoute.data.animationConf) {return undefined;}
 
-      var conf = nextRoute.data.animationConf;
-      var name = currentRoute.originalPath.substring(1) || 'root'; //root refers to the '/' route
+      var name, conf = nextRoute.data.animationConf;
+
+      if (currentRoute && currentRoute.originalPath) {
+        name = currentRoute.originalPath.substring(1);
+      } else {
+        name = 'root'; //root refers to the '/' route
+      }
 
       _animationClass.name = conf[name] ||  conf.fallback || _defaultAnimation;
     };
